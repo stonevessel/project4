@@ -8,7 +8,7 @@ class Main {
     public static void main(String[] args) {
         menu();
         //ArrayList<Tasks> myTasks = new ArrayList<>();
-        HashMap<Integer, Tasks> myTasksHM= new HashMap<>();
+        ArrayList<Tasks> myTasks= new ArrayList<>();
         int choose = -7;
         int user = 0;
 
@@ -18,28 +18,18 @@ class Main {
             if (choose == 1) {
                 System.out.println("Whats the priority of your task? from 1 to 5");
                 int taskPriority = intInput();
-                try{
-                    if (taskPriority <5 || taskPriority>0){
+                try{while (taskPriority >5 || taskPriority<0){
+                    System.out.println("try that again please enter a number between 1 and 5 for your priority");
+                    System.out.println("Whats the priority of your task? from 1 to 5");
+                    taskPriority = intInput();
+                }
                         System.out.println("Whats the title of your task?");
                         String taskTitle = input();
                         System.out.println("What task would you like to add? ");
                         String taskToAddToList = input();
                         Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
-                        myTasksHM.put(taskPriority,task1);
+                        myTasks.add(task1);
                         menu();
-                    }else{
-                        System.out.println("try that again please enter a number between 1 and 5 for your priority");
-                        System.out.println("Whats the priority of your task? from 1 to 5");
-                        taskPriority = intInput();
-                        System.out.println("Whats the title of your task?");
-                        String taskTitle = input();
-                        System.out.println("What task would you like to add? ");
-                        String taskToAddToList = input();
-                        Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
-                        myTasksHM.put(taskPriority,task1);
-                        menu();
-                    }
-
                 }catch (Exception e){
                     System.out.println("try that again please enter a whole number between 1 and 5 for your priority");
                     System.out.println("Whats the priority of your task? from 1 to 5");
@@ -49,27 +39,27 @@ class Main {
                     System.out.println("What task would you like to add? ");
                     String taskToAddToList = input();
                     Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
-                    myTasksHM.put(taskPriority,task1);
+                    myTasks.add(task1);
                     menu();
                 }
             }
             if (choose == 2){
-                System.out.println(myTasksHM);
-                System.out.println("which task would you like to remove by priority?");
-                user=intInput();
-                System.out.println("whats the title of the task?");
-                String title = input();
-                myTasksHM.remove(user);
-                menu();
+                try {
+                    System.out.println(myTasks);
+                    System.out.println("which task would you like to remove by index?");
+                    user = intInput();
+                    myTasks.remove(user);
+                    menu();
+                }catch (Exception e){
+                    System.out.println("Program shutting down");
+                }
                 //come back to error proof this section olinger
             }
             if (choose == 3){
-                System.out.println(myTasksHM);
-                System.out.println("which task would you like to update by priority?");
+                System.out.println(myTasks);
+                System.out.println("which task would you like to update by index?");
                 user=intInput();
-                System.out.println("whats the title of the task?");
-                String title = input();
-                myTasksHM.remove(user);
+                myTasks.remove(user);
                 System.out.println("Whats the priority of your task? from 1 to 5");
                 int taskPriority = intInput();
                 try{
@@ -79,7 +69,7 @@ class Main {
                         System.out.println("What task would you like to add? ");
                         String taskToAddToList = input();
                         Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
-                        myTasksHM.put(taskPriority,task1);
+                        myTasks.add(task1);
                         menu();
                     }else{
                         System.out.println("try that again please enter a number between 1 and 5 for your priority");
@@ -90,7 +80,7 @@ class Main {
                         System.out.println("What task would you like to add? ");
                         String taskToAddToList = input();
                         Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
-                        myTasksHM.put(taskPriority,task1);
+                        myTasks.add(task1);
                         menu();
                     }
 
@@ -103,18 +93,18 @@ class Main {
                     System.out.println("What task would you like to add? ");
                     String taskToAddToList = input();
                     Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
-                    myTasksHM.put(taskPriority,task1);
+                    myTasks.add(task1);
                     menu();
                 }
             }
             if (choose == 4){
-                System.out.println(myTasksHM);
+                System.out.println(myTasks);
                 menu();
             }
             if (choose == 5){
                 System.out.println("what priority of task would you like to see?");
                 int finder = intInput();
-                System.out.println(myTasksHM.get(finder));
+                System.out.println(myTasks.get(finder));
                 menu();
 
 
