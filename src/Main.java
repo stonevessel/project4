@@ -7,7 +7,6 @@ class Main {
 
     public static void main(String[] args) {
         menu();
-        //ArrayList<Tasks> myTasks = new ArrayList<>();
         ArrayList<Tasks> myTasks= new ArrayList<>();
         int choose = -7;
         int user = 0;
@@ -104,7 +103,9 @@ class Main {
             if (choose == 5){
                 System.out.println("what priority of task would you like to see?");
                 int finder = intInput();
-                System.out.println(myTasks.get(finder));
+                String find = input();
+                Tasks p1 = new Tasks(finder);
+                System.out.println(myTasks);
                 menu();
 
 

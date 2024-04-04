@@ -9,6 +9,10 @@ public class Tasks {
         this.task = task;
     }
 
+    public Tasks(int priority) {
+        this.priority = priority;
+    }
+
     public int getPriority() {
         return priority;
     }
