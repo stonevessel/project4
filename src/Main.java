@@ -1,15 +1,26 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 class Main {
     public static Scanner input = new Scanner(System.in);
+    public static ArrayList<Tasks> myTasks= new ArrayList<>();
 
     public static void main(String[] args) {
         menu();
-        ArrayList<Tasks> myTasks= new ArrayList<>();
         int choose = -7;
         int user = 0;
+        serializeSimple();
+        deserializeSimple();
+
 
         while (choose != 0) {
             choose = intInput();
@@ -22,13 +33,14 @@ class Main {
                     System.out.println("Whats the priority of your task? from 1 to 5");
                     taskPriority = intInput();
                 }
-                        System.out.println("Whats the title of your task?");
-                        String taskTitle = input();
-                        System.out.println("What task would you like to add? ");
-                        String taskToAddToList = input();
-                        Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
-                        myTasks.add(task1);
-                        menu();
+                    System.out.println("Whats the title of your task?");
+                    String taskTitle = input();
+                    System.out.println("What task would you like to add? ");
+                    String taskToAddToList = input();
+                    Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
+                    myTasks.add(task1);
+                    serializeSimple();
+                    menu();
                 }catch (Exception e){
                     System.out.println("try that again please enter a whole number between 1 and 5 for your priority");
                     System.out.println("Whats the priority of your task? from 1 to 5");
@@ -39,6 +51,7 @@ class Main {
                     String taskToAddToList = input();
                     Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
                     myTasks.add(task1);
+                    serializeSimple();
                     menu();
                 }
             }
@@ -48,6 +61,7 @@ class Main {
                     System.out.println("which task would you like to remove by index?");
                     user = intInput();
                     myTasks.remove(user);
+                    serializeSimple();
                     menu();
                 }catch (Exception e){
                     System.out.println("Program shutting down");
@@ -69,6 +83,7 @@ class Main {
                         String taskToAddToList = input();
                         Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
                         myTasks.add(task1);
+                        serializeSimple();
                         menu();
                     }else{
                         System.out.println("try that again please enter a number between 1 and 5 for your priority");
@@ -80,6 +95,7 @@ class Main {
                         String taskToAddToList = input();
                         Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
                         myTasks.add(task1);
+                        serializeSimple();
                         menu();
                     }
 
@@ -93,6 +109,7 @@ class Main {
                     String taskToAddToList = input();
                     Tasks task1 = new Tasks(taskPriority, taskTitle, taskToAddToList);
                     myTasks.add(task1);
+                    serializeSimple();
                     menu();
                 }
             }
@@ -112,6 +129,7 @@ class Main {
 
             }
         }
+        deserializeSimple();
         System.out.println("System shutting down......");
     }
 
@@ -124,6 +142,35 @@ class Main {
         System.out.println("(4) list all tasks");
         System.out.println("(5) list all tasks by priority");
         System.out.println("(0) quit");
+    }
+    static void deserializeSimple(){
+        try (FileReader reader = new FileReader("data.json")){
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = parser.parse(reader);
+            Gson gson = new Gson();
+            ArrayList<Tasks> yeah= gson.fromJson(jsonElement,ArrayList.class);
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    static void serializeSimple(){
+        Tasks losdais = new Tasks(3,"dog","walk the dog dude bro");
+        Tasks losmanas = new Tasks(2,"cat","eat the cat bruh");
+        myTasks.add(losdais);
+        myTasks.add(losmanas);
+
+
+        Gson gson = new Gson();
+        try (FileWriter writer = new FileWriter("data.json")){
+            gson.toJson(myTasks,writer);
+        } catch (IOException e) {e.printStackTrace();}
+
+
     }
 
     static String input() {
